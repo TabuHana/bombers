@@ -10,6 +10,12 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Bombers Notebook",
   description: "Remember everything about your friends",
+  icons: [
+    {
+      url: '/notebook-temp.svg',
+      href: '/notebook-temp.svg',
+    }
+  ]
 };
 
 export default function RootLayout({
