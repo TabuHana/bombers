@@ -25,7 +25,7 @@ export default function RootLayout({
 }>) {
     return (
         <html lang='en'>
-            <body className={cn('bg-amber-200', tabular.className)}>{children}</body>
+            <body className={cn('bg-zinc-200 text-black', tabular.className)}>{children}</body>
         </html>
     );
 }
