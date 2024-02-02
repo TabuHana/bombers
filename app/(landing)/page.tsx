@@ -6,7 +6,7 @@ const LandingPage = () => {
             <p>Please Login or Sign Up to continue.</p>
             <div className='flex'>
                 <div>
-                    <p>Bomber's Notebook is a way to keep track of your friends!</p>
+                    <p>Bombers Notebook is a way to keep track of your friends!</p>
                     <div>TODO: Add image of the app</div>
                 </div>
             </div>
