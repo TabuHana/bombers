@@ -10,8 +10,13 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { HolderSchema } from '@/schemas';
 import { Input } from './ui/input';
 import { Button } from './ui/button';
+import { useTransition } from 'react';
+import { register } from '@/actions/register';
+import { redirect } from 'next/navigation';
 
 export const HolderForm = () => {
+    const [isPending, startTransition] = useTransition();
+
     const form = useForm<z.infer<typeof HolderSchema>>({
         resolver: zodResolver(HolderSchema),
         defaultValues: {
@@ -22,7 +27,11 @@ export const HolderForm = () => {
     });
 
     const onSubmit = (values: z.infer<typeof HolderSchema>) => {
-        console.log(values);
+        startTransition(() => {
+            register(values).then((data) => {
+                console.log(data)
+            });
+        });
     };
 
     return (
@@ -40,7 +49,12 @@ export const HolderForm = () => {
                                     <FormItem>
                                         <FormLabel>Whats your name?</FormLabel>
                                         <FormControl>
-                                            <Input {...field} placeholder='Tabuki Hana' className='bg-transparent border-black' />
+                                            <Input
+                                                {...field}
+                                                placeholder='Tabuki Hana'
+                                                disabled={isPending}
+                                                className='bg-transparent border-black'
+                                            />
                                         </FormControl>
                                         <FormMessage />
                                     </FormItem>
@@ -48,12 +62,17 @@ export const HolderForm = () => {
                             />
                             <FormField
                                 control={form.control}
-                                name='name'
+                                name='nickname'
                                 render={({ field }) => (
                                     <FormItem>
                                         <FormLabel>What do you prefer to be called?</FormLabel>
                                         <FormControl>
-                                            <Input {...field} placeholder='Tabu' className='bg-transparent border-black' />
+                                            <Input
+                                                {...field}
+                                                placeholder='Tabu'
+                                                disabled={isPending}
+                                                className='bg-transparent border-black'
+                                            />
                                         </FormControl>
                                         <FormMessage />
                                     </FormItem>
@@ -61,12 +80,17 @@ export const HolderForm = () => {
                             />
                             <FormField
                                 control={form.control}
-                                name='name'
+                                name='pronouns'
                                 render={({ field }) => (
                                     <FormItem>
                                         <FormLabel>What are your pronouns?</FormLabel>
                                         <FormControl>
-                                            <Input {...field} placeholder='They/Them, She/Her, He/Him, etc.' className='bg-transparent border-black' />
+                                            <Input
+                                                {...field}
+                                                placeholder='They/Them, She/Her, He/Him, etc.'
+                                                disabled={isPending}
+                                                className='bg-transparent border-black'
+                                            />
                                         </FormControl>
                                         <FormMessage />
                                     </FormItem>
@@ -77,7 +101,7 @@ export const HolderForm = () => {
                             {/* <Button type='submit' className='w-24' variant='ghost'>
                             Skip
                         </Button> */}
-                            <Button type='submit' className='w-24'>
+                            <Button type='submit' className='w-24' disabled={isPending}>
                                 Continue
                             </Button>
                         </div>

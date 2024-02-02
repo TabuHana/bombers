@@ -11,10 +11,56 @@ datasource db {
   directUrl = env("DIRECT_URL")
 }
 
-model Holder {
-  id       String    @id @default(uuid())
-  userId   String    @unique
-  name     String
-  nickname String
-  pronouns String
+model Notebook {
+  id     String @id @default(uuid())
+  userId String @unique
+
+  holder HolderPage?
+  pages  Page[]
+}
+
+model Page {
+  id       String  @id @default(uuid())
+  userId   String  @unique
+  name     String?
+  nickname String?
+  pronouns String?
+
+  notebookId String   @unique
+  notebook   Notebook @relation(fields: [notebookId], references: [id])
+
+  notes Note[]
+}
+
+model Note {
+  id    String  @id @default(uuid())
+  title String? @db.Text
+  body  String? @db.Text
+
+  Page   Page?   @relation(fields: [pageId], references: [id])
+  pageId String?
+}
+
+model HolderPage {
+  id       String  @id @default(uuid())
+  userId   String  @unique
+  name     String?
+  nickname String?
+  pronouns String?
+
+  notebookId String   @unique
+  notebook   Notebook @relation(fields: [notebookId], references: [id])
+
+  notes HolderNote[]
+
+  @@map("holder")
+}
+
+model HolderNote {
+  id    String  @id @default(uuid())
+  title String? @db.Text
+  body  String? @db.Text
+
+  HolderPage   HolderPage? @relation(fields: [holderPageId], references: [id])
+  holderPageId String?
 }
