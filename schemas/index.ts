@@ -11,3 +11,9 @@ export const HolderSchema = z.object({
     required_error: 'Pronouns are required',
   }),
 });
+
+export const NewPageSchema = z.object({
+  name: z.optional(z.string()),
+  nickname: z.optional(z.string()),
+  pronouns: z.optional(z.string()),
+})

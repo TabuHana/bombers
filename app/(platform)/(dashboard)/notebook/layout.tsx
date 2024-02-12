@@ -1,6 +1,7 @@
 import { auth } from '@clerk/nextjs';
 
 import { redirect } from 'next/navigation';
+import { NotebookNav } from './_components/notebook-nav';
 
 const NotebookLayout = async ({ children }: { children: React.ReactNode }) => {
     const { userId } = auth();
@@ -9,6 +10,11 @@ const NotebookLayout = async ({ children }: { children: React.ReactNode }) => {
         redirect('/sign-in');
     }
 
-    return <div className='h-full bg-blue-200'>{children}</div>;
+    return (
+        <div className='h-full'>
+            <NotebookNav />
+            {children}
+        </div>
+    );
 };
 export default NotebookLayout;
